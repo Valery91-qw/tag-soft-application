@@ -16,8 +16,6 @@ function App() {
 
     }, [])
 
-    if(posts.length !== 0) console.log(posts)
-
     return (
         <div className="App">
             <Stack horizontal={true} horizontalAlign={"center"}>

@@ -4,8 +4,6 @@ import {postsApi} from "../dal/pasts-api";
 
 const SET_POSTS = 'SET_POSTS';
 
-
-
 export const initialState: PostsStateType = {
     posts: []
 }
@@ -21,8 +19,9 @@ export const postsReducer = (state = initialState, action: ActionType): PostsSta
 
 export const setPosts = (posts: Array<any>) => ({type: SET_POSTS, posts} as const);
 
+
 export const getPosts = ():ThunkType => {
-    return async (dispatch, getState: () => RootStateType) => {
+    return async (dispatch) => {
         try {
             const posts = await postsApi.getPosts()
             dispatch(setPosts(posts))
@@ -37,7 +36,8 @@ type ThunkType = ThunkAction<void, RootStateType, unknown, ActionType>
 
 type SetPostsType = ReturnType<typeof setPosts>
 
-type ActionType = SetPostsType;
+
+type ActionType = SetPostsType
 
 export type PostsStateType = {
     posts: Array<any>

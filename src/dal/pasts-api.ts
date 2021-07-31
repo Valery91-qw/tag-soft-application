@@ -1,16 +1,11 @@
-
-
-
 export const postsApi = {
-    getPosts() {
+    getPosts(){
         return fetch(`https://jsonplaceholder.typicode.com/posts`)
             .then(res => {
-                if(res.status === 200) {
-                    return res.json()
-                } else {
-
+                if (!res.ok) {
+                    throw new Error(res.statusText)
                 }
-            })
-            .then(res => res)
+                return res.json()
+            }).then(res => res)
     }
 }

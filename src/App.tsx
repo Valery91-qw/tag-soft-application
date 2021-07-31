@@ -1,9 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import { Stack } from '@fluentui/react';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "./bll/store";
+import {getPosts} from "./bll/posts-reducer";
 
 function App() {
+
+    const dispatch = useDispatch();
+    const posts = useSelector<RootStateType, Array<any>>(state => state.posts.posts)
+
+    useEffect(() => {
+        dispatch(getPosts())
+
+    }, [])
+
+    if(posts.length !== 0) console.log(posts)
 
     return (
         <div className="App">

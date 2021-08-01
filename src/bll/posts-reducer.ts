@@ -17,7 +17,7 @@ export const postsReducer = (state = initialState, action: ActionType): PostsSta
     }
 }
 
-export const setPosts = (posts: Array<any>) => ({type: SET_POSTS, posts} as const);
+export const setPosts = (posts: Array<PostType>) => ({type: SET_POSTS, posts} as const);
 
 
 export const getPosts = ():ThunkType => {
@@ -31,11 +31,16 @@ export const getPosts = ():ThunkType => {
     }
 
 }
+export type PostType = {
+    userId: number
+    id: number
+    title: string
+    body: string
+}
 
 type ThunkType = ThunkAction<void, RootStateType, unknown, ActionType>
 
 type SetPostsType = ReturnType<typeof setPosts>
-
 
 type ActionType = SetPostsType
 

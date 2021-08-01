@@ -5,6 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./bll/store";
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+
+initializeIcons();
 
 ReactDOM.render(
   <React.StrictMode>

@@ -4,16 +4,16 @@ import { Stack } from '@fluentui/react';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "./bll/store";
-import {getPosts} from "./bll/posts-reducer";
+import {getPosts, PostType} from "./bll/posts-reducer";
+import {PostsTable} from "./component/table/posts-table";
 
 function App() {
 
     const dispatch = useDispatch();
-    const posts = useSelector<RootStateType, Array<any>>(state => state.posts.posts)
+    const posts = useSelector<RootStateType, Array<PostType>>(state => state.posts.posts)
 
     useEffect(() => {
         dispatch(getPosts())
-
     }, [])
 
     return (
@@ -22,6 +22,7 @@ function App() {
                 <DefaultButton>Yap</DefaultButton>
                 <PrimaryButton>No yap</PrimaryButton>
             </Stack>
+            <PostsTable posts={posts} />
             world hello
         </div>
     );

@@ -2,17 +2,15 @@ import * as React from 'react';
 import {
     GroupHeader,
     GroupedList,
-    IGroupHeaderCheckboxProps,
     IGroupHeaderProps,
     IGroupRenderProps,
     IGroup,
 } from '@fluentui/react/lib/GroupedList';
 import {IColumn, IObjectWithKey, DetailsRow} from '@fluentui/react/lib/DetailsList';
 import {FocusZone} from '@fluentui/react/lib/FocusZone';
-import {Selection, SelectionMode, SelectionZone} from '@fluentui/react/lib/Selection';
-import {Toggle} from '@fluentui/react/lib/Toggle';
+import { SelectionMode } from '@fluentui/react/lib/Selection';
 import {useConst} from '@fluentui/react-hooks';
-import {createListItems, createGroups, IExampleItem} from '@fluentui/example-data';
+import {createGroups, IExampleItem} from '@fluentui/example-data';
 import {PostType} from "../../bll/posts-reducer";
 
 const groupCount = 10;
@@ -21,7 +19,7 @@ const groupDepth = 1;
 const groupProps: IGroupRenderProps = {
     onRenderHeader: (props?: IGroupHeaderProps): JSX.Element => (
         <GroupHeader {...props}
-                     styles={{"check": {"display": "none"}, "headerCount": {"display": "none"}, title: {  }}}/>
+                     styles={{"check": {"display": "none"}, "headerCount": {"display": "none"} }}/>
     ),
 };
 

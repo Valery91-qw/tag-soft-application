@@ -1,70 +1,77 @@
+import * as React from 'react';
 import {
+    GroupHeader,
+    GroupedList,
     IGroupHeaderCheckboxProps,
     IGroupHeaderProps,
     IGroupRenderProps,
-    IObjectWithKey
-} from "@fluentui/react";
-import { Toggle } from '@fluentui/react/lib/Toggle';
-import {  GroupedList, GroupHeader } from '@fluentui/react/lib/GroupedList';
-import { DetailsRow } from '@fluentui/react/lib/DetailsList';
-
+    IGroup,
+} from '@fluentui/react/lib/GroupedList';
+import {IColumn, IObjectWithKey, DetailsRow} from '@fluentui/react/lib/DetailsList';
+import {FocusZone} from '@fluentui/react/lib/FocusZone';
+import {Selection, SelectionMode, SelectionZone} from '@fluentui/react/lib/Selection';
+import {Toggle} from '@fluentui/react/lib/Toggle';
+import {useConst} from '@fluentui/react-hooks';
+import {createListItems, createGroups, IExampleItem} from '@fluentui/example-data';
 import {PostType} from "../../bll/posts-reducer";
 
-function grouped(items: Array<PostType>) {
+const groupCount = 10;
+const groupDepth = 1;
 
-    let currentGroup: any = []
+const groupProps: IGroupRenderProps = {
+    onRenderHeader: (props?: IGroupHeaderProps): JSX.Element => (
+        <GroupHeader {...props}
+                     styles={{"check": {"display": "none"}, "headerCount": {"display": "none"}, title: {  }}}/>
+    ),
+};
 
-    const groupNames = new Set(items.map(el => el.userId))
-
-    groupNames.forEach( groupName => {
-        const groupLength = items.filter(item => item.userId === groupName).length
-        const groupIndex = items.map(item => item.userId).indexOf(groupName)
-        currentGroup.push({
-            key: groupName, name: groupName, level: 0, count: groupLength, startIndex: groupIndex
-        })
-    })
-
-    return currentGroup
-
-}
-
-type PropsType = {
+type PostsTablePropsType = {
     posts: Array<PostType>
 }
 
-export const PostsTable = ({ posts }: PropsType ) => {
+export const PostsTable = ({posts}: PostsTablePropsType) => {
+    const items = posts
+    const groups = useConst(() => createGroups(groupCount, groupDepth, 0, groupCount, 0, '322', true));
 
-    const items: IObjectWithKey[] = createItems(posts)
-    function createItems(posts: Array<PostType>) {
-        const itemsGroup: Array<any> = []
-        const itemsCount = new Set(posts.map(item => item.userId))
-        itemsCount.forEach(currentItems => {
-            itemsGroup.push({key: currentItems, name: `user:${currentItems}`})
-        })
-        return itemsGroup
-    }
-
-    const groups = grouped(posts)
+    console.log(groups)
 
 
-    const groupsProps: IGroupRenderProps = {
-        onRenderHeader: (props?: IGroupHeaderProps): JSX.Element => (
-            <GroupHeader onRenderGroupHeaderCheckbox={onRenderGroupHeaderCheckbox} {...props} />
-        )
-    }
-    const onRenderGroupHeaderCheckbox = (props?: IGroupHeaderCheckboxProps) => (
-        <Toggle checked={props ? props.checked : undefined} />
+    const columns = useConst(() =>
+        Object.keys(items[0])
+            .slice(0, 3)
+            .map(
+                (key: string): IColumn => ({
+                    key: key,
+                    name: key,
+                    fieldName: key,
+                    minWidth: 300,
+                }),
+            ),
     );
 
-    const onRenderCell = (item?: any, itemIndex?: any, group?: any) => {
-        return <DetailsRow item={item} itemIndex={itemIndex} group={group}>
-            Hello
-        </DetailsRow>
-    }
+    const onRenderCell = React.useCallback(
+        (nestingDepth?: number, item?: IExampleItem, itemIndex?: number, group?: IGroup): React.ReactNode => (
+            <DetailsRow
+                columns={columns}
+                groupNestingDepth={nestingDepth}
+                item={item}
+                itemIndex={itemIndex!}
+                selectionMode={SelectionMode.multiple}
+                group={group}
+            />
+        ),
+        [columns],
+    );
 
     return (
-        <div>
-           <GroupedList items={items} onRenderCell={onRenderCell} groups={groups} groupProps={groupsProps}/>
-        </div>
-    )
-}
+        <>
+            <GroupedList
+                items={items}
+                onRenderCell={onRenderCell}
+                groups={groups}
+                groupProps={groupProps}
+            />
+
+        </>
+    );
+};

@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import { Stack } from '@fluentui/react';
-import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "./bll/store";
 import {getPosts, PostType} from "./bll/posts-reducer";
@@ -14,16 +12,11 @@ function App() {
 
     useEffect(() => {
         dispatch(getPosts())
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="App">
-            <Stack horizontal={true} horizontalAlign={"center"}>
-                <DefaultButton>Yap</DefaultButton>
-                <PrimaryButton>No yap</PrimaryButton>
-            </Stack>
-            <PostsTable posts={posts} />
-            world hello
+            {posts.length !== 0 ? <PostsTable posts={posts} /> : 'hello'}
         </div>
     );
 }

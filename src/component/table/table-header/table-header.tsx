@@ -3,14 +3,18 @@ import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 
 const classNames = mergeStyleSets({
     container: {
-       backgroundColor: 'red'
+       textAlign: 'left',
+       marginLeft: '2em',
+    },
+    title: {
+        fontSize: '1.5em',
     }
 });
 
 export const onRenderGroupHeader: IDetailsGroupRenderProps['onRenderHeader'] = (props) => {
     return (
         <div className={classNames.container}>
-            {props?.group!.key}
+            <div className={classNames.title}>{props?.group!.key}</div>
         </div>
     )
 }

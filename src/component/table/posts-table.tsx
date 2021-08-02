@@ -30,8 +30,6 @@ export const PostsTable = ({posts}: PostsTablePropsType) => {
             ),
     );
 
-
-
     return (
         <>
             <DetailsList

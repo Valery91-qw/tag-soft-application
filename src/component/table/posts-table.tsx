@@ -2,7 +2,7 @@ import * as React from 'react';
 import {DetailsList, IColumn, IGroup,} from '@fluentui/react/lib/DetailsList';
 import {useConst} from '@fluentui/react-hooks';
 import {PostType} from "../../bll/posts-reducer";
-import {onRenderGroupHeader} from "./table-header/table-header";
+import {onRenderGroupHeader} from "./row/table-row-header/table-header";
 import {groped} from "../../utils/create-group-utils";
 
 

@@ -1,13 +1,16 @@
 import {IDetailsGroupRenderProps, IGroupDividerProps} from "@fluentui/react/lib/DetailsList";
 import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 import React from "react";
-import {Toggle} from "@fluentui/react";
+import {getTheme, Toggle} from "@fluentui/react";
 
+const theme = getTheme();
 const classNames = mergeStyleSets({
     container: {
        display: 'flex',
        textAlign: 'left',
-       margin: '1em 0 1em 2em',
+       margin: '0.5em 0',
+       padding: '1em 0 1em 2em',
+       background: theme.palette.neutralLighterAlt,
     },
     title: {
         fontSize: '1.5em',
@@ -19,7 +22,7 @@ const classNames = mergeStyleSets({
     }
 });
 
-export const onRenderGroupHeader: IDetailsGroupRenderProps['onRenderHeader'] = (props) => {
+export const onTableRowHeader: IDetailsGroupRenderProps['onRenderHeader'] = (props) => {
 
     const handleToggle = (props: IGroupDividerProps) => {
         return () => {

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {DetailsList, IColumn, IGroup,} from '@fluentui/react/lib/DetailsList';
-import {useConst} from '@fluentui/react-hooks';
+import {CheckboxVisibility, DetailsList, IGroup,} from '@fluentui/react/lib/DetailsList';
 import {PostType} from "../../bll/posts-reducer";
-import {onRenderGroupHeader} from "./row/table-row-header/table-header";
+import {onTableRowHeader} from "./row/table-row-header/table-row-header";
 import {groped} from "../../utils/create-group-utils";
-
+import {onTableRowFooter} from "./row/table-row-footer/table-row-footer";
+import {onTableHeader} from "./table-header/table-header";
 
 
 type PostsTablePropsType = {
@@ -17,29 +17,16 @@ export const PostsTable = ({posts}: PostsTablePropsType) => {
 
     const myGroups: IGroup[] = groped(posts)
 
-    const columns = useConst(() =>
-        Object.keys(items[0])
-            .slice(0, 3)
-            .map(
-                (key: string): IColumn => ({
-                    key: key,
-                    name: key,
-                    fieldName: key,
-                    minWidth: 300,
-                }),
-            ),
-    );
-
     return (
-        <>
             <DetailsList
                 items={items}
                 groups={myGroups}
                 groupProps={{
-                    onRenderHeader: onRenderGroupHeader
+                    onRenderHeader: onTableRowHeader,
+                    onRenderFooter: onTableRowFooter,
                 }}
+                onRenderDetailsHeader={onTableHeader}
+                checkboxVisibility={CheckboxVisibility.hidden}
             />
-
-        </>
     );
 };
